@@ -2,30 +2,19 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { Outlet } from 'react-router-dom'
+import Header from './components/Header/Header'
+import Footer from './components/Footer/Footer'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <>
-      <h1 className="text-7xl font-bold text-red-500">
-        Hello world!
-      </h1>
-      <div className="card bg-base-100 w-96 shadow-xl">
-  <figure>
-    <img
-      src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-      alt="Shoes" />
-  </figure>
-  <div className="card-body">
-    <h2 className="card-title">Shoes!</h2>
-    <p>If a dog chews shoes whose shoes does he choose?</p>
-    <div className="card-actions justify-end">
-      <button className="btn btn-primary">Buy Now</button>
+    <div className='max-w-screen-xl mx-auto px-8 md:px-16 lg:px-24 py-5'>
+      <Header></Header>
+      <Outlet></Outlet>
+      <Footer></Footer>
     </div>
-  </div>
-</div>
-    </>
   )
 }
 
