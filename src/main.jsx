@@ -16,6 +16,8 @@ import Deposit from './pages/Deposit/Deposit.jsx'
 import MyPurchasedProducts from './pages/MyPurchasedProducts/MyPurchasedProducts.jsx'
 import MyShortlistedProducts from './pages/MyShortlistedProducts/MyShortlistedProducts.jsx'
 import Transactions from './pages/Transactions/Transactions.jsx'
+import Register from './pages/Register/Register.jsx'
+import Login from './pages/Login/Login.jsx'
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,8 @@ const router = createBrowserRouter([
       { path: '/products', element: <Products></Products> },
       { path: '/add-products', element: <AddProducts></AddProducts> },
       { path: '/contact', element: <Contact></Contact> },
+      { path: '/register', element: <Register></Register> },
+      { path: '/login', element: <Login></Login> },
       {
         path: '/dashboard',
         element: <Dashboard />,
