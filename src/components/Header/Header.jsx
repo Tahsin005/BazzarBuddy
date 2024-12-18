@@ -70,7 +70,7 @@ const Header = () => {
                         <div className="absolute top-16 left-0 w-full bg-white bg-opacity-90 lg:hidden">
                             <div className="flex flex-col items-center space-y-4 py-4">
                                 <Link to="/about" className="text-base text-black hover:text-opacity-80">
-                                    About
+                                    About Us
                                 </Link>
                                 <Link to="/products" className="text-base text-black hover:text-opacity-80">
                                     Products
@@ -94,7 +94,7 @@ const Header = () => {
                     {/* Desktop Menu */}
                     <div className="hidden lg:flex lg:items-center lg:justify-center lg:space-x-10">
                         <Link to="/about" className="text-base text-black transition-all duration-200 hover:text-opacity-80">
-                            About
+                            About Us
                         </Link>
                         <Link to="/products" className="text-base text-black transition-all duration-200 hover:text-opacity-80">
                             Products
