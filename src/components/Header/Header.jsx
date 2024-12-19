@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { GiHamburgerMenu } from "react-icons/gi"
-import logo from '../../assets/logo.svg'
-
+import React, { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { GiHamburgerMenu } from "react-icons/gi";
+import logo from '../../assets/logo.svg';
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -10,6 +9,7 @@ const Header = () => {
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+
     return (
         <header className="bg-slate-100 rounded-xl">
             <div className="px-4 mx-auto sm:px-6 lg:px-8">
@@ -69,54 +69,82 @@ const Header = () => {
                     {isMenuOpen && (
                         <div className="absolute top-[85px] left-0 w-full bg-white bg-opacity-90 lg:hidden">
                             <div className="flex flex-col items-center space-y-4 py-4">
-                                <Link to="/about" className="text-base text-black hover:text-opacity-80">
+                                <NavLink
+                                    to="/about"
+                                    className={({ isActive }) =>
+                                        `text-base text-black hover:text-opacity-80 block mb-2 ${isActive ? 'text-blue-600' : 'hover:text-opacity-80'}`
+                                    }
+                                >
                                     About Us
-                                </Link>
-                                <Link to="/products" className="text-base text-black hover:text-opacity-80">
+                                </NavLink>
+                                <NavLink
+                                    to="/products"
+                                    className={({ isActive }) =>
+                                        `text-base text-black hover:text-opacity-80 block mb-2 ${isActive ? 'text-blue-600' : 'hover:text-opacity-80'}`
+                                    }
+                                >
                                     Products
-                                </Link>
-                                <Link to="/add-products" className="text-base text-black hover:text-opacity-80">
+                                </NavLink>
+                                <NavLink
+                                    to="/add-products"
+                                    className={({ isActive }) =>
+                                        `text-base text-black hover:text-opacity-80 block mb-2 ${isActive ? 'text-blue-600' : 'hover:text-opacity-80'}`
+                                    }
+                                >
                                     Add Product
-                                </Link>
-                                {/* <Link to="/contact" className="text-base text-black hover:text-opacity-80">
-                                    Contact
-                                </Link> */}
-                                <Link
+                                </NavLink>
+                                <NavLink
                                     to='/dashboard'
-                                    className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-xl"
+                                    className={({ isActive }) =>
+                                        `inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-xl ${isActive ? 'bg-blue-600 text-white' : ''}`
+                                    }
                                 >
                                     Dashboard
-                                </Link>
+                                </NavLink>
                             </div>
                         </div>
                     )}
 
                     {/* Desktop Menu */}
                     <div className="hidden lg:flex lg:items-center lg:justify-center lg:space-x-10">
-                        <Link to="/about" className="text-base text-black transition-all duration-200 hover:text-opacity-80">
+                        <NavLink
+                            to="/about"
+                            className={({ isActive }) =>
+                                `text-base text-black transition-all duration-200 hover:text-opacity-80 ${isActive ? 'text-blue-600' : ''}`
+                            }
+                        >
                             About Us
-                        </Link>
-                        <Link to="/products" className="text-base text-black transition-all duration-200 hover:text-opacity-80">
+                        </NavLink>
+                        <NavLink
+                            to="/products"
+                            className={({ isActive }) =>
+                                `text-base text-black transition-all duration-200 hover:text-opacity-80 ${isActive ? 'text-blue-600' : ''}`
+                            }
+                        >
                             Products
-                        </Link>
-                        <Link to="/add-products" className="text-base text-black transition-all duration-200 hover:text-opacity-80">
+                        </NavLink>
+                        <NavLink
+                            to="/add-products"
+                            className={({ isActive }) =>
+                                `text-base text-black transition-all duration-200 hover:text-opacity-80 ${isActive ? 'text-blue-600' : ''}`
+                            }
+                        >
                             Add Product
-                        </Link>
-                        {/* <Link to="/contact" className="text-base text-black transition-all duration-200 hover:text-opacity-80">
-                            Contact
-                        </Link> */}
+                        </NavLink>
                     </div>
 
-                    <Link
+                    <NavLink
                         to='/dashboard'
-                        className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-xl"
+                        className={({ isActive }) =>
+                            `hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-xl ${isActive ? 'bg-blue-600 text-white' : ''}`
+                        }
                     >
                         Dashboard
-                    </Link>
+                    </NavLink>
                 </div>
             </div>
         </header>
-    )
+    );
 }
 
-export default Header
+export default Header;
