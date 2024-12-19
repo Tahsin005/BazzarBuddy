@@ -19,6 +19,7 @@ import Transactions from './pages/Transactions/Transactions.jsx'
 import Register from './pages/Register/Register.jsx'
 import Login from './pages/Login/Login.jsx'
 import ProductDetails from './pages/ProductDetails/ProductDetails.jsx'
+import EditProducts from './pages/EditProducts/EditProducts.jsx'
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
       { path: '/products', element: <Products></Products> },
       { path: '/product-details', element: <ProductDetails></ProductDetails> },
       { path: '/add-products', element: <AddProducts></AddProducts> },
+      { path: '/edit-products', element: <EditProducts></EditProducts> },
       { path: '/contact', element: <Contact></Contact> },
       { path: '/register', element: <Register></Register> },
       { path: '/login', element: <Login></Login> },
