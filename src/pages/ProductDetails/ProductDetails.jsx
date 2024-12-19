@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
 const ProductDetails = () => {
-  const [review, setReview] = useState(""); // Stores the submitted review
-  const [newReview, setNewReview] = useState(""); // Stores the input value from the form
+  const [review, setReview] = useState("");
+  const [newReview, setNewReview] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setReview(newReview); // Save the review
-    setNewReview(""); // Clear the input field
+    setReview(newReview);
+    setNewReview("");
   };
 
   return (
@@ -38,7 +38,7 @@ const ProductDetails = () => {
 
           {/* Add to Cart and Buy Now Buttons */}
           <div className="flex gap-4">
-            <button className="bg-yellow-400 text-black py-3 px-6 rounded-lg font-semibold hover:bg-yellow-300 transition duration-300 ease-in-out transform hover:scale-105 shadow-lg">
+            <button className="bg-yellow-400 text-black py-3 px-6 rounded-xl font-semibold hover:bg-yellow-300 transition duration-300 ease-in-out transform shadow-lg">
               Buy Now
             </button>
           </div>
@@ -74,7 +74,7 @@ const ProductDetails = () => {
             ></textarea>
             <button
               type="submit"
-              className="mt-4 bg-blue-600 text-white py-2 px-6 rounded-lg font-semibold hover:bg-blue-500 transition duration-300 ease-in-out transform hover:scale-105 shadow-lg"
+              className="mt-4 bg-blue-600 text-white py-2 px-6 rounded-xl font-semibold hover:bg-blue-500 transition duration-300 ease-in-out transform  shadow-lg"
             >
               Submit Review
             </button>

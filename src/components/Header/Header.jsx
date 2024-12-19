@@ -11,7 +11,7 @@ const Header = () => {
         setIsMenuOpen(!isMenuOpen);
     };
     return (
-        <header className="bg-slate-100 rounded-full">
+        <header className="bg-slate-100 rounded-xl">
             <div className="px-4 mx-auto sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16 lg:h-20">
                     <div className="flex-shrink-0">
@@ -76,7 +76,7 @@ const Header = () => {
                                     Products
                                 </Link>
                                 <Link to="/add-products" className="text-base text-black hover:text-opacity-80">
-                                    Add Products
+                                    Add Product
                                 </Link>
                                 {/* <Link to="/contact" className="text-base text-black hover:text-opacity-80">
                                     Contact
@@ -100,7 +100,7 @@ const Header = () => {
                             Products
                         </Link>
                         <Link to="/add-products" className="text-base text-black transition-all duration-200 hover:text-opacity-80">
-                            Add Products
+                            Add Product
                         </Link>
                         {/* <Link to="/contact" className="text-base text-black transition-all duration-200 hover:text-opacity-80">
                             Contact
@@ -109,7 +109,7 @@ const Header = () => {
 
                     <Link
                         to='/dashboard'
-                        className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-full"
+                        className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-xl"
                     >
                         Dashboard
                     </Link>

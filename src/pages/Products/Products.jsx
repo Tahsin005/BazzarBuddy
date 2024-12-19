@@ -110,7 +110,7 @@ const Products = () => {
                   <div className="card-actions justify-center mt-4">
                     <Link
                       to="/product-details"
-                      className="text-white bg-black text-center hover:bg-yellow-300 hover:text-black py-2 px-6 rounded-lg text-lg font-semibold transition duration-300 ease-in-out transform hover:shadow-lg w-full"
+                      className="text-white bg-black text-center hover:bg-yellow-300 hover:text-black py-2 px-6 rounded-xl text-lg font-semibold transition duration-300 ease-in-out transform hover:shadow-lg w-full"
                     >
                       Details
                     </Link>
