@@ -67,7 +67,7 @@ const Header = () => {
 
                     {/* Mobile Menu */}
                     {isMenuOpen && (
-                        <div className="absolute top-16 left-0 w-full bg-white bg-opacity-90 lg:hidden">
+                        <div className="absolute top-[85px] left-0 w-full bg-white bg-opacity-90 lg:hidden">
                             <div className="flex flex-col items-center space-y-4 py-4">
                                 <Link to="/about" className="text-base text-black hover:text-opacity-80">
                                     About Us
@@ -78,9 +78,9 @@ const Header = () => {
                                 <Link to="/add-products" className="text-base text-black hover:text-opacity-80">
                                     Add Products
                                 </Link>
-                                <Link to="/contact" className="text-base text-black hover:text-opacity-80">
+                                {/* <Link to="/contact" className="text-base text-black hover:text-opacity-80">
                                     Contact
-                                </Link>
+                                </Link> */}
                                 <Link
                                     to='/dashboard'
                                     className="px-5 py-2.5 text-base font-semibold text-white bg-black rounded-full hover:bg-yellow-300 hover:text-black"
@@ -102,9 +102,9 @@ const Header = () => {
                         <Link to="/add-products" className="text-base text-black transition-all duration-200 hover:text-opacity-80">
                             Add Products
                         </Link>
-                        <Link to="/contact" className="text-base text-black transition-all duration-200 hover:text-opacity-80">
+                        {/* <Link to="/contact" className="text-base text-black transition-all duration-200 hover:text-opacity-80">
                             Contact
-                        </Link>
+                        </Link> */}
                     </div>
 
                     <Link
