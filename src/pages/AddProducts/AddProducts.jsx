@@ -27,7 +27,7 @@ const AddProducts = () => {
     <section className="py-10 sm:py-16 lg:py-24">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="bg-white rounded-lg shadow-lg p-8">
-          <h1 className="text-center text-3xl md:text-5xl font-bold text-gray-800 mb-6">Add Product</h1>
+          <h1 className="text-center text-2xl md:text-4xl font-bold text-gray-800 mb-6">Add Product</h1>
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Product Name */}
             <div>

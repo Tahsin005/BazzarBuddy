@@ -25,7 +25,7 @@ const ChangePassword = () => {
 
     return (
         <main className="mx-auto pt-2 mt-2">
-            <h1 className="font-bold text-3xl md:text-4xl text-center mb-8">Change Your Password</h1>
+            <h1 className="font-bold text-2xl md:text-3xl text-center mb-8">Change Your Password</h1>
 
             {/* Error Container */}
             {errorMessage && (
@@ -40,7 +40,7 @@ const ChangePassword = () => {
                         <form method="POST" onSubmit={handleChangePassword}>
                             {/* Old Password */}
                             <div className="mt-4">
-                                <label htmlFor="old-password" className="text-2xl text-gray-700 block mb-1 font-medium">Old Password</label>
+                                <label htmlFor="old-password" className="text-xl lg:text-2xl text-gray-700 block mb-1 font-medium">Old Password</label>
                                 <input
                                     type="password"
                                     name="old-password"
@@ -55,7 +55,7 @@ const ChangePassword = () => {
 
                             {/* New Password */}
                             <div className="mt-4">
-                                <label htmlFor="password" className="text-2xl text-gray-700 block mb-1 font-medium">New Password</label>
+                                <label htmlFor="password" className="text-xl lg:text-2xl text-gray-700 block mb-1 font-medium">New Password</label>
                                 <input
                                     type="password"
                                     name="password"
@@ -70,7 +70,7 @@ const ChangePassword = () => {
 
                             {/* Confirm New Password */}
                             <div className="mt-4">
-                                <label htmlFor="password2" className="text-2xl text-gray-700 block mb-1 font-medium">Confirm New Password</label>
+                                <label htmlFor="password2" className="text-xl lg:text-2xl text-gray-700 block mb-1 font-medium">Confirm New Password</label>
                                 <input
                                     type="password"
                                     name="password2"
@@ -87,7 +87,7 @@ const ChangePassword = () => {
                             <div className="space-x-4 mt-8">
                                 <button
                                     type="submit"
-                                    className="bg-black text-white hover:text-black hover:bg-yellow-300 py-3 px-6 rounded-lg font-semibold text-lg transition duration-300 ease-in-out transform hover:shadow-lg w-full"
+                                    className="bg-black text-white hover:text-black hover:bg-yellow-300 py-3 px-6 rounded-lg font-semibold text-base lg:text-lg transition duration-300 ease-in-out transform hover:shadow-lg w-full"
                                 >
                                     Change Password
                                 </button>
