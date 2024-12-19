@@ -109,8 +109,8 @@ const Products = () => {
                   </p>
                   <div className="card-actions justify-center mt-4">
                     <Link
-                      to=""
-                      className="text-white bg-black text-center hover:bg-yellow-300 hover:text-black py-2 px-6 rounded-lg text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg w-full"
+                      to="/product-details"
+                      className="text-white bg-black text-center hover:bg-yellow-300 hover:text-black py-2 px-6 rounded-lg text-lg font-semibold transition duration-300 ease-in-out transform hover:shadow-lg w-full"
                     >
                       Details
                     </Link>

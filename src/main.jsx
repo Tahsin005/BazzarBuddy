@@ -18,6 +18,7 @@ import MyShortlistedProducts from './pages/MyShortlistedProducts/MyShortlistedPr
 import Transactions from './pages/Transactions/Transactions.jsx'
 import Register from './pages/Register/Register.jsx'
 import Login from './pages/Login/Login.jsx'
+import ProductDetails from './pages/ProductDetails/ProductDetails.jsx'
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
       { path: '/', element: <Home></Home> },
       { path: '/about', element: <About></About> },
       { path: '/products', element: <Products></Products> },
+      { path: '/product-details', element: <ProductDetails></ProductDetails> },
       { path: '/add-products', element: <AddProducts></AddProducts> },
       { path: '/contact', element: <Contact></Contact> },
       { path: '/register', element: <Register></Register> },
