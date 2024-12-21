@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     first_name: '',
@@ -9,6 +13,7 @@ const Register = () => {
     password: '',
     confirm_password: '',
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,12 +25,57 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form Submitted:', formData);
-    // Add your form submission logic here (e.g., API call).
+
+    const { username, first_name, last_name, email, password, confirm_password } = formData;
+    if (!username || !first_name || !last_name || !email || !password || !confirm_password) {
+      toast.warning('Please fill out all fields.');
+      return;
+    }
+
+    if (password !== confirm_password) {
+      toast.error('Passwords do not match.');
+      return;
+    }
+    setIsLoading(true);
+
+    try {
+      fetch("http://127.0.0.1:8000/user/register/", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+      })
+          .then((response) => {
+              if (response.status === 200) {
+                  setIsLoading(false);
+                  toast.success("Check your mail for confirmation link.");
+                  setTimeout(() => {
+                      navigate('/login');
+                  }, 2000);
+              } else {
+                setIsLoading(false);
+                  console.log("Registration failed with status code:", response.status);
+                  toast.error(response.statusText);
+              }
+          })
+          .catch((error) => {
+            setIsLoading(false);
+              console.log("Error during registration:", error);
+              toast.error("An error occurred during registration.");
+          });
+
+  } catch (err) {
+      setIsLoading(false);
+      console.log(err);
+      toast.error("An unexpected error occurred.");
+  }
+
   };
 
   return (
     <section className="py-10 sm:py-16 lg:py-24">
+      <ToastContainer />
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="bg-white rounded-lg shadow-lg p-8">
           <h1 className="text-center text-2xl md:text-4xl font-bold text-gray-800 mb-6">Sign Up</h1>
