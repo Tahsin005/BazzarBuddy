@@ -5,23 +5,72 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-  });
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  const handleLogin = (event) => {
+    event.preventDefault();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Login Attempt:', formData);
-    // Add your form submission logic here (e.g., API call).
+    if (!username || !password) {
+      toast.error("Please fill in both username and password.");
+      return;
+    }
+
+    setIsLoading(true);
+
+    fetch("http://127.0.0.1:8000/user/login/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.token && data.user_id) {
+          localStorage.setItem("bazzar_buddy_token", data.token);
+          localStorage.setItem("bazzar_buddy_user_id", data.user_id);
+          const user_id = data.user_id;
+
+          fetch(`http://127.0.0.1:8000/user/account/?user_id=${user_id}`)
+            .then((res) => res.json())
+            .then((value) => {
+              var ID = 0;
+              value.forEach(element => {
+                if (element.user === data.user_id) {
+                  ID = element.id;
+                }
+              });
+
+              if (data && value && ID) {
+                localStorage.setItem("bazzar_buddy_user_account", ID);
+                localStorage.setItem("bazzar_buddy_username", username);
+                setIsLoading(false);
+
+                toast.success('Logged in successfully');
+
+                setTimeout(() => {
+                  navigate('/');
+                }, 2000);
+              }
+            })
+            .catch((err) => {
+              console.error("Error fetching account details:", err);
+              toast.error("Failed to retrieve user account details.");
+              setIsLoading(false);
+            });
+        } else {
+          toast.error("Invalid username or password.");
+          setIsLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error during login:", error);
+        toast.error("An error occurred while logging in. Please try again later.");
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -29,7 +78,7 @@ const Login = () => {
       <div className="px-6 mx-auto max-w-7xl lg:px-8">
         <div className="p-8 bg-white rounded-lg shadow-lg">
           <h1 className="mb-6 text-2xl font-bold text-center text-gray-800 md:text-4xl">Login</h1>
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleLogin} className="space-y-6">
             {/* Username */}
             <div>
               <label
@@ -42,8 +91,8 @@ const Login = () => {
                 type="text"
                 name="username"
                 id="username"
-                value={formData.username}
-                onChange={handleChange}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 className="block w-full px-3 py-2 text-gray-700 bg-gray-100 border border-gray-200 rounded focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Enter your username"
                 required
@@ -62,8 +111,8 @@ const Login = () => {
                 type="password"
                 name="password"
                 id="password"
-                value={formData.password}
-                onChange={handleChange}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="block w-full px-3 py-2 text-gray-700 bg-gray-100 border border-gray-200 rounded focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Enter your password"
                 required
@@ -76,23 +125,24 @@ const Login = () => {
                 type="submit"
                 className="w-full px-6 py-3 text-lg font-semibold text-white transition duration-300 ease-in-out transform bg-black rounded-lg hover:text-black hover:bg-yellow-300 hover:shadow-lg"
               >
-                Login
+                {isLoading ? <BlinkBlur color="#2563eb" size="medium" text="" textColor="" /> : "Login"}
               </button>
             </div>
 
             {/* Sign Up Link */}
             <p className="mt-4 text-sm text-center text-gray-600">
               Don't have an account?{" "}
-              <a
-                href="/register"
+              <Link
+                to="/register"
                 className="font-medium text-blue-600 hover:underline"
               >
                 Register here
-              </a>
+              </Link>
             </p>
           </form>
         </div>
       </div>
+      <ToastContainer />
     </section>
   );
 };

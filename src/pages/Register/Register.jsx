@@ -56,6 +56,9 @@ const Register = () => {
             toast.error(`${data.username[0]}`);
           } else {
             toast.success("Check your mail for confirmation link.");
+            setTimeout(() => {
+              navigate('/login');
+            }, 2000);
             console.dir(data)
           }
         })
@@ -80,9 +83,7 @@ const Register = () => {
         <div className="px-6 mx-auto max-w-7xl lg:px-8">
           <div className="p-8 bg-white rounded-lg shadow-lg">
             <h1 className="mb-6 text-2xl font-bold text-center text-gray-800 md:text-4xl">Sign Up</h1>
-            {isLoading ? (<div className='flex items-center justify-center h-72'>
-              <BlinkBlur color="#2563eb" size="medium" text="" textColor="" />
-            </div>) : (<form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               {/* Username */}
               <div>
                 <label
@@ -209,7 +210,7 @@ const Register = () => {
                   type="submit"
                   className="w-full px-6 py-3 text-lg font-semibold text-white transition duration-300 ease-in-out transform bg-black rounded-lg hover:text-black hover:bg-yellow-300 hover:shadow-lg"
                 >
-                  Register
+                  {isLoading ? <BlinkBlur color="#2563eb" size="medium" text="" textColor="" /> : "Register"}
                 </button>
               </div>
 
@@ -223,7 +224,7 @@ const Register = () => {
                   Login
                 </a>
               </p>
-            </form>)}
+            </form>
 
           </div>
         </div>
