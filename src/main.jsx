@@ -21,6 +21,8 @@ import Login from './pages/Login/Login.jsx'
 import ProductDetails from './pages/ProductDetails/ProductDetails.jsx'
 import EditProducts from './pages/EditProducts/EditProducts.jsx'
 
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute.jsx'
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -38,7 +40,11 @@ const router = createBrowserRouter([
       { path: '/login', element: <Login></Login> },
       {
         path: '/dashboard',
-        element: <Dashboard />,
+        element: (
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        ),
         children: [
           { path: 'profile/change-password', element: <ChangePassword></ChangePassword> },
           { path: 'profile/edit-profile', element: <EditProfile></EditProfile> },
