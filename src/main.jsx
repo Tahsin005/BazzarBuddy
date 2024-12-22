@@ -32,8 +32,22 @@ const router = createBrowserRouter([
       { path: '/', element: <Home></Home> },
       { path: '/about', element: <About></About> },
       { path: '/products', element: <Products></Products> },
-      { path: '/product-details', element: <ProductDetails></ProductDetails> },
-      { path: '/add-products', element: <AddProducts></AddProducts> },
+      {
+        path: '/product-details',
+        element: (
+          <ProtectedRoute>
+            <ProductDetails />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/add-products',
+        element: (
+          <ProtectedRoute>
+            <AddProducts />
+          </ProtectedRoute>
+        ),
+      },
       { path: '/edit-products', element: <EditProducts></EditProducts> },
       { path: '/contact', element: <Contact></Contact> },
       { path: '/register', element: <Register></Register> },

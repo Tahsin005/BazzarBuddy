@@ -1,8 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { BlinkBlur } from 'react-loading-indicators';
 
 const Dashboard = () => {
   const location = useLocation();
+  const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState(null);
+  const [account, setAccount] = useState(null);
+
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const user_id = localStorage.getItem('bazzar_buddy_user_id');
+    const user_account = localStorage.getItem('bazzar_buddy_user_account');
+    console.log(user_id, user_account);
+
+    try {
+      fetch(`http://127.0.0.1:8000/user/allUser/${user_id}/`)
+        .then((response) => response.json())
+        .then((userData) => {
+          setUser(userData);
+          try {
+            fetch(`https://lifted-listed-backend.onrender.com/user/account/${user_account}/`)
+              .then((response) => response.json())
+              .then((account) => {
+                setAccount(account);
+                setIsLoading(false);
+                console.log(user);
+                console.log(account);
+              })
+          } catch (error) {
+
+          }
+        })
+    } catch (error) {
+
+    }
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen md:flex-row">
@@ -95,19 +130,51 @@ const Dashboard = () => {
       {/* Main Content */}
       <main className="flex-1 p-6">
         {location.pathname === '/dashboard' ? (
-          <div className="p-4 bg-white rounded-lg shadow">
-            <h1 className="mb-4 text-2xl font-bold">Welcome, User!</h1>
-            <p className="text-lg">
-              Here is your account overview and some important details about your profile.
-            </p>
-            <ul className="mt-4 space-y-2">
-              <li>
-                <strong>Name:</strong> John Doe
-              </li>
-              <li>
-                <strong>Email:</strong> johndoe@example.com
-              </li>
-            </ul>
+          <div>
+            {isLoading ? (
+              <div className='flex items-center justify-center h-52'>
+                <BlinkBlur color="#2563eb" size="medium" text="" textColor="" />
+              </div>
+            ) : (
+              <div className="p-4 bg-white rounded-lg shadow">
+              <h1 className="mb-4 text-xl font-bold text-center sm:text-lg">Welcome to Your Dashboard</h1>
+              <section className="p-4 mx-auto rounded-lg shadow bg-slate-100 sm:p-3 md:max-w-md">
+                <div className="flex flex-col items-center space-y-4 text-center">
+                  {/* Profile Picture Placeholder */}
+                  <div className="flex items-center justify-center w-24 h-24 text-gray-600 bg-gray-300 rounded-full">
+                    {user?.first_name ? (
+                      <span className="text-2xl font-semibold">{user.first_name[0]}</span>
+                    ) : (
+                      <span className="text-2xl font-semibold">P</span>
+                    )}
+                  </div>
+
+                  <h2 className="text-base font-bold text-gray-900 sm:text-sm">
+                    {user?.first_name} {user?.last_name}
+                  </h2>
+                  <p className="text-sm text-gray-600">@{user?.username}</p>
+
+                  <div className="mt-4 space-y-3 text-left">
+                    <div className="flex items-center justify-between sm:text-sm">
+                      <span className="font-medium text-gray-700">Email:</span>
+                      <a
+                        href={`mailto:${user?.email}`}
+                        className="font-bold text-blue-600 hover:underline"
+                      >
+                        {user?.email}
+                      </a>
+                    </div>
+                    <div className="flex items-center justify-between sm:text-sm">
+                      <span className="font-medium text-gray-700">Balance:</span>
+                      <span className="font-bold text-green-600">{account?.balance}</span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+
+            )}
           </div>
         ) : (
           <Outlet />
