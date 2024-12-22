@@ -36,19 +36,19 @@ const Transactions = () => {
   };
 
     return (
-        <main className="mx-auto pt-2 mt-2">
-            <h1 className="font-bold text-3xl md:text-4xl text-center mb-8">Transactions</h1>
+        <main className="pt-2 mx-auto mt-2">
+            <h1 className="mb-8 text-3xl font-bold text-center md:text-4xl">Transactions</h1>
 
             <div className="grid grid-cols-1">
                 <div className="my-auto">
                     <div className="rounded">
-                        <table className="table-auto w-full border-collapse border border-gray-300">
+                        <table className="w-full border border-collapse border-gray-300 table-auto">
                             <thead>
                                 <tr className="bg-gray-200">
-                                    <th className="border border-gray-300 px-4 py-2 text-left">Timestamp</th>
-                                    <th className="border border-gray-300 px-4 py-2 text-left">Transaction Type</th>
-                                    <th className="border border-gray-300 px-4 py-2 text-right">Amount</th>
-                                    <th className="border border-gray-300 px-4 py-2 text-right">
+                                    <th className="px-4 py-2 text-left border border-gray-300">Timestamp</th>
+                                    <th className="px-4 py-2 text-left border border-gray-300">Transaction Type</th>
+                                    <th className="px-4 py-2 text-right border border-gray-300">Amount</th>
+                                    <th className="px-4 py-2 text-right border border-gray-300">
                                         Balance After Transaction
                                     </th>
                                 </tr>
@@ -56,16 +56,16 @@ const Transactions = () => {
                             <tbody>
                                 {transactions.map((transaction, index) => (
                                     <tr key={index} className={getRowClass(transaction.transaction_type)}>
-                                        <td className="border border-gray-300 px-4 py-2">
+                                        <td className="px-4 py-2 border border-gray-300">
                                             {new Date(transaction.timestamp).toLocaleString()}
                                         </td>
-                                        <td className="border border-gray-300 px-4 py-2 capitalize">
+                                        <td className="px-4 py-2 capitalize border border-gray-300">
                                             {transaction.transaction_type.toLowerCase()}
                                         </td>
-                                        <td className="border border-gray-300 px-4 py-2 text-right">
+                                        <td className="px-4 py-2 text-right border border-gray-300">
                                             ${transaction.amount}
                                         </td>
-                                        <td className="border border-gray-300 px-4 py-2 text-right">
+                                        <td className="px-4 py-2 text-right border border-gray-300">
                                             ${transaction.balance_after_transaction}
                                         </td>
                                     </tr>

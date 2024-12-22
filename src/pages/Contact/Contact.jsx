@@ -2,36 +2,36 @@ import React from 'react'
 
 const Contact = () => {
   return (
-    <section className="bg-white py-10 sm:py-16 lg:py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="py-10 bg-white sm:py-16 lg:py-24">
+      <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
           {/* Contact Form */}
           <div>
             <h2 className="text-3xl font-bold text-blue-600 sm:text-4xl lg:text-5xl">Get in Touch</h2>
             <form className="mt-8 space-y-6">
               <div>
-                <label className="block text-gray-600 font-medium" htmlFor="name">Your Name</label>
+                <label className="block font-medium text-gray-600" htmlFor="name">Your Name</label>
                 <input
                   type="text"
                   id="name"
-                  className="w-full mt-2 px-4 py-3 text-gray-900 border rounded-lg focus:outline-none focus:ring focus:ring-yellow-300"
+                  className="w-full px-4 py-3 mt-2 text-gray-900 border rounded-lg focus:outline-none focus:ring focus:ring-yellow-300"
                   placeholder="Enter your name"
                 />
               </div>
               <div>
-                <label className="block text-gray-600 font-medium" htmlFor="email">Your Email</label>
+                <label className="block font-medium text-gray-600" htmlFor="email">Your Email</label>
                 <input
                   type="email"
                   id="email"
-                  className="w-full mt-2 px-4 py-3 text-gray-900 border rounded-lg focus:outline-none focus:ring focus:ring-yellow-300"
+                  className="w-full px-4 py-3 mt-2 text-gray-900 border rounded-lg focus:outline-none focus:ring focus:ring-yellow-300"
                   placeholder="Enter your email"
                 />
               </div>
               <div>
-                <label className="block text-gray-600 font-medium" htmlFor="message">Your Message</label>
+                <label className="block font-medium text-gray-600" htmlFor="message">Your Message</label>
                 <textarea
                   id="message"
-                  className="w-full mt-2 px-4 py-3 text-gray-900 border rounded-lg focus:outline-none focus:ring focus:ring-yellow-300"
+                  className="w-full px-4 py-3 mt-2 text-gray-900 border rounded-lg focus:outline-none focus:ring focus:ring-yellow-300"
                   rows="4"
                   placeholder="Write your message"
                 ></textarea>

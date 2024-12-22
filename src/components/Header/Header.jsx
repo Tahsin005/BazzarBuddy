@@ -68,7 +68,7 @@ const Header = () => {
                     {/* Mobile Menu */}
                     {isMenuOpen && (
                         <div className="absolute top-[85px] left-0 w-full bg-white bg-opacity-90 lg:hidden">
-                            <div className="flex flex-col items-center space-y-4 py-4">
+                            <div className="flex flex-col items-center py-4 space-y-4">
                                 <NavLink
                                     to="/about"
                                     className={({ isActive }) =>

@@ -5,17 +5,17 @@ const Dashboard = () => {
   const location = useLocation();
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
+    <div className="flex flex-col min-h-screen md:flex-row">
       {/* Sidebar / Top Navigation */}
-      <aside className="bg-slate-100 mt-4 text-black rounded-xl w-full md:w-52 lg:w-64 md:min-h-screen flex flex-wrap md:block">
-        <div className="p-6 w-full">
-          <NavLink to={'/dashboard'} className="text-2xl font-bold mb-4 text-center md:text-left">
+      <aside className="flex flex-wrap w-full mt-4 text-black bg-slate-100 rounded-xl md:w-52 lg:w-64 md:min-h-screen md:block">
+        <div className="w-full p-6">
+          <NavLink to={'/dashboard'} className="mb-4 text-2xl font-bold text-center md:text-left">
             Dashboard
           </NavLink>
-          <nav className="space-y-4 md:space-y-4 md:flex md:flex-col mt-3">
+          <nav className="mt-3 space-y-4 md:space-y-4 md:flex md:flex-col">
             {/* Profile Navigation */}
             <div className="flex flex-wrap justify-center md:block">
-              <h3 className="text-lg font-semibold w-full text-center md:text-left mb-2 md:mb-0">
+              <h3 className="w-full mb-2 text-lg font-semibold text-center md:text-left md:mb-0">
                 Profile
               </h3>
               <NavLink
@@ -56,8 +56,8 @@ const Dashboard = () => {
               </NavLink>
             </div>
             {/* Products Navigation */}
-            <div className="flex flex-wrap justify-center md:block mt-4 md:mt-0">
-              <h3 className="text-lg font-semibold w-full text-center md:text-left mb-2 md:mb-0">
+            <div className="flex flex-wrap justify-center mt-4 md:block md:mt-0">
+              <h3 className="w-full mb-2 text-lg font-semibold text-center md:text-left md:mb-0">
                 My Products
               </h3>
               <NavLink
@@ -96,7 +96,7 @@ const Dashboard = () => {
       <main className="flex-1 p-6">
         {location.pathname === '/dashboard' ? (
           <div className="p-4 bg-white rounded-lg shadow">
-            <h1 className="text-2xl font-bold mb-4">Welcome, User!</h1>
+            <h1 className="mb-4 text-2xl font-bold">Welcome, User!</h1>
             <p className="text-lg">
               Here is your account overview and some important details about your profile.
             </p>

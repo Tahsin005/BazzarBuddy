@@ -6,7 +6,7 @@ const About = () => {
   return (
     <div className=''>
       <section className='bg-[#FCF8F1] bg-opacity-30 py-10 sm:py-16 lg:py-24'>
-        <div className="mx-auto max-w-7xl  px-6 lg:px-8">
+        <div className="px-6 mx-auto max-w-7xl lg:px-8">
           <div className="grid items-center grid-cols-1 gap-12 lg:grid-cols-2">
             {/* Text Section */}
             <div>
@@ -23,7 +23,7 @@ const About = () => {
               <p className="mt-4 text-base text-gray-600">
                 Our mission is to help you shop smarter, not harder, by curating the best-rated products for your needs.
               </p>
-              <div className="mt-8 flex flex-col sm:flex-row sm:space-x-4">
+              <div className="flex flex-col mt-8 sm:flex-row sm:space-x-4">
                 <Link
                   to="/products"
                   className="inline-flex items-center px-6 py-3 text-base font-semibold text-black transition-all duration-200 bg-yellow-300 rounded-full hover:bg-yellow-400 focus:bg-yellow-400"
@@ -47,7 +47,7 @@ const About = () => {
 
                 <Link
                   to="/contact"
-                  className="mt-4 sm:mt-0 inline-flex items-center px-6 py-3 text-base font-semibold text-black transition-all duration-200 border-2 border-yellow-300 rounded-full hover:bg-yellow-300 hover:text-white"
+                  className="inline-flex items-center px-6 py-3 mt-4 text-base font-semibold text-black transition-all duration-200 border-2 border-yellow-300 rounded-full sm:mt-0 hover:bg-yellow-300 hover:text-white"
                 >
                   Contact Us
                 </Link>

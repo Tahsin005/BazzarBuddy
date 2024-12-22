@@ -12,39 +12,39 @@ const MyShortlistedProducts = ({  }) => {
     { id: 6, name: "Toy Car", category: "Toys", price: 10, image: "https://i.ibb.co.com/TtjdRN5/2.jpg" },
   ];
   return (
-    <main className="max-w-screen-xl mx-auto px-6 md:px-12 lg:px-16 py-10">
-      <h1 className="font-bold text-3xl md:text-4xl text-center mb-8">My Shortlisted Products</h1>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <main className="max-w-screen-xl px-6 py-10 mx-auto md:px-12 lg:px-16">
+      <h1 className="mb-8 text-3xl font-bold text-center md:text-4xl">My Shortlisted Products</h1>
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {products.map((product) => (
           <div key={product.id} className="card bg-[#FADADD] shadow-xl h-full rounded-xl">
             <figure>
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-48 object-cover rounded-t-xl"
+                className="object-cover w-full h-48 rounded-t-xl"
               />
             </figure>
-            <div className="card-body p-6">
-              <h2 className="card-title text-xl font-semibold">{product.name}</h2>
+            <div className="p-6 card-body">
+              <h2 className="text-xl font-semibold card-title">{product.name}</h2>
               <div>
                 <h2 className="text-sm text-gray-600">Category: {product.category}</h2>
               </div>
-              <h2 className="text-md font-semibold mt-2">
+              <h2 className="mt-2 font-semibold text-md">
                 Price: <span>${product.price}</span>
               </h2>
-              <p className="text-sm text-gray-700 mt-2">
+              <p className="mt-2 text-sm text-gray-700">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore,
                 temporibus.
               </p>
-              <div className="card-actions flex justify-center mt-4 space-x-4">
+              <div className="flex justify-center mt-4 space-x-4 card-actions">
                 <Link
                   to="/product-details"
-                  className="text-white bg-black hover:bg-yellow-300 hover:text-black py-2 px-6 rounded-xl text-lg font-semibold transition duration-300 ease-in-out transform hover:shadow-lg"
+                  className="px-6 py-2 text-lg font-semibold text-white transition duration-300 ease-in-out transform bg-black hover:bg-yellow-300 hover:text-black rounded-xl hover:shadow-lg"
                 >
                   Details
                 </Link>
                 <button
-                  className="text-white bg-red-500 hover:bg-red-700 py-2 px-6 rounded-xl text-lg font-semibold transition duration-300 ease-in-out transform hover:shadow-lg"
+                  className="px-6 py-2 text-lg font-semibold text-white transition duration-300 ease-in-out transform bg-red-500 hover:bg-red-700 rounded-xl hover:shadow-lg"
                 >
                   Remove
                 </button>

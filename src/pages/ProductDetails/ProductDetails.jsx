@@ -12,25 +12,25 @@ const ProductDetails = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className="px-4 py-10 mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         {/* Product Image Section */}
         <div>
           <img
             src="https://i.ibb.co.com/gD4Ps8N/1.jpg"
             alt="Product"
-            className="w-full h-auto object-cover rounded-lg shadow-md"
+            className="object-cover w-full h-auto rounded-lg shadow-md"
           />
         </div>
 
         {/* Product Info Section */}
         <div className="flex flex-col justify-center">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">
+          <h1 className="mb-4 text-4xl font-bold text-gray-800">
             Product Name
           </h1>
-          <h2 className="text-lg text-gray-600 mb-2">Category: Electronics</h2>
-          <p className="text-2xl font-semibold text-blue-600 mb-4">$120.00</p>
-          <p className="text-gray-700 mb-6 leading-relaxed">
+          <h2 className="mb-2 text-lg text-gray-600">Category: Electronics</h2>
+          <p className="mb-4 text-2xl font-semibold text-blue-600">$120.00</p>
+          <p className="mb-6 leading-relaxed text-gray-700">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum,
             minima? Necessitatibus sunt officiis voluptas, molestias
             consectetur explicabo eaque in iste recusandae quod vero ratione
@@ -45,7 +45,7 @@ const ProductDetails = () => {
             >
               Edit Product
             </Link>
-            <button className="bg-yellow-400 text-black py-3 px-6 rounded-xl font-semibold hover:bg-yellow-300 transition duration-300 ease-in-out transform shadow-lg">
+            <button className="px-6 py-3 font-semibold text-black transition duration-300 ease-in-out transform bg-yellow-400 shadow-lg rounded-xl hover:bg-yellow-300">
               Buy Now
             </button>
           </div>
@@ -54,11 +54,11 @@ const ProductDetails = () => {
 
       {/* Reviews Section */}
       <div className="mt-16">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6">Reviews</h2>
+        <h2 className="mb-6 text-3xl font-bold text-gray-800">Reviews</h2>
 
         {review ? (
           // Show the review if submitted
-          <div className="p-4 border rounded-lg bg-gray-50 shadow-sm">
+          <div className="p-4 border rounded-lg shadow-sm bg-gray-50">
             <p className="text-gray-700">
               <strong>User's Review:</strong> {review}
             </p>
@@ -67,9 +67,9 @@ const ProductDetails = () => {
           // Show the review submission form if no review
           <form
             onSubmit={handleSubmit}
-            className="p-4 border rounded-lg bg-gray-50 shadow-sm"
+            className="p-4 border rounded-lg shadow-sm bg-gray-50"
           >
-            <label className="block text-gray-700 font-medium mb-2">
+            <label className="block mb-2 font-medium text-gray-700">
               Submit Your Review:
             </label>
             <textarea
@@ -81,7 +81,7 @@ const ProductDetails = () => {
             ></textarea>
             <button
               type="submit"
-              className="mt-4 bg-blue-600 text-white py-2 px-6 rounded-xl font-semibold hover:bg-blue-500 transition duration-300 ease-in-out transform  shadow-lg"
+              className="px-6 py-2 mt-4 font-semibold text-white transition duration-300 ease-in-out transform bg-blue-600 shadow-lg rounded-xl hover:bg-blue-500"
             >
               Submit Review
             </button>

@@ -10,7 +10,7 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className='max-w-screen-xl mx-auto px-8 md:px-16 lg:px-24 py-5'>
+    <div className='max-w-screen-xl px-8 py-5 mx-auto md:px-16 lg:px-24'>
       <Header></Header>
       <Outlet></Outlet>
       <Footer></Footer>

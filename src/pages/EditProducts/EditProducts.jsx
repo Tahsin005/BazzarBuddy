@@ -25,8 +25,8 @@ const EditProducts = ({  }) => {
 
   return (
     <section className="bg-[#FCF8F1] bg-opacity-30 py-10 sm:py-16 lg:py-24">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-12">
+      <div className="px-6 mx-auto max-w-7xl lg:px-8">
+        <div className="grid items-center grid-cols-1 gap-12 lg:grid-cols-2">
           {/* Form Section */}
           <div>
             <h1 className="text-4xl font-bold text-black sm:text-5xl xl:text-6xl">
@@ -145,7 +145,7 @@ const EditProducts = ({  }) => {
               <div>
                 <button
                   type="submit"
-                  className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold bg-black text-white hover:text-black hover:bg-yellow-300 rounded-lg focus:ring-2 focus:ring-offset-2"
+                  className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-black rounded-lg hover:text-black hover:bg-yellow-300 focus:ring-2 focus:ring-offset-2"
                 >
                   Save Changes
                 </button>

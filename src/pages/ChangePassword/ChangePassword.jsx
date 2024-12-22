@@ -24,12 +24,12 @@ const ChangePassword = () => {
     };
 
     return (
-        <main className="mx-auto pt-2 mt-2">
-            <h1 className="font-bold text-2xl md:text-3xl text-center mb-8">Change Your Password</h1>
+        <main className="pt-2 mx-auto mt-2">
+            <h1 className="mb-8 text-2xl font-bold text-center md:text-3xl">Change Your Password</h1>
 
             {/* Error Container */}
             {errorMessage && (
-                <div id="error-container" className="text-red-500 mb-4">
+                <div id="error-container" className="mb-4 text-red-500">
                     {errorMessage}
                 </div>
             )}
@@ -40,12 +40,12 @@ const ChangePassword = () => {
                         <form method="POST" onSubmit={handleChangePassword}>
                             {/* Old Password */}
                             <div className="mt-4">
-                                <label htmlFor="old-password" className="text-xl lg:text-2xl text-gray-700 block mb-1 font-medium">Old Password</label>
+                                <label htmlFor="old-password" className="block mb-1 text-xl font-medium text-gray-700 lg:text-2xl">Old Password</label>
                                 <input
                                     type="password"
                                     name="old-password"
                                     id="old-password"
-                                    className="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
+                                    className="block w-full px-3 py-1 text-gray-700 bg-gray-100 border border-gray-200 rounded focus:ring-blue-500 focus:border-blue-500"
                                     placeholder="Enter your old password"
                                     value={oldPassword}
                                     onChange={(e) => setOldPassword(e.target.value)}
@@ -55,12 +55,12 @@ const ChangePassword = () => {
 
                             {/* New Password */}
                             <div className="mt-4">
-                                <label htmlFor="password" className="text-xl lg:text-2xl text-gray-700 block mb-1 font-medium">New Password</label>
+                                <label htmlFor="password" className="block mb-1 text-xl font-medium text-gray-700 lg:text-2xl">New Password</label>
                                 <input
                                     type="password"
                                     name="password"
                                     id="password"
-                                    className="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
+                                    className="block w-full px-3 py-1 text-gray-700 bg-gray-100 border border-gray-200 rounded focus:ring-blue-500 focus:border-blue-500"
                                     placeholder="Enter your new password"
                                     value={newPassword}
                                     onChange={(e) => setNewPassword(e.target.value)}
@@ -70,12 +70,12 @@ const ChangePassword = () => {
 
                             {/* Confirm New Password */}
                             <div className="mt-4">
-                                <label htmlFor="password2" className="text-xl lg:text-2xl text-gray-700 block mb-1 font-medium">Confirm New Password</label>
+                                <label htmlFor="password2" className="block mb-1 text-xl font-medium text-gray-700 lg:text-2xl">Confirm New Password</label>
                                 <input
                                     type="password"
                                     name="password2"
                                     id="password2"
-                                    className="bg-gray-100 border border-gray-200 rounded py-2 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
+                                    className="block w-full px-3 py-2 text-gray-700 bg-gray-100 border border-gray-200 rounded focus:ring-blue-500 focus:border-blue-500"
                                     placeholder="Confirm your new password"
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
@@ -84,10 +84,10 @@ const ChangePassword = () => {
                             </div>
 
                             {/* Submit Button */}
-                            <div className="space-x-4 mt-8">
+                            <div className="mt-8 space-x-4">
                                 <button
                                     type="submit"
-                                    className="bg-black text-white hover:text-black hover:bg-yellow-300 py-3 px-6 rounded-lg font-semibold text-base lg:text-lg transition duration-300 ease-in-out transform hover:shadow-lg w-full"
+                                    className="w-full px-6 py-3 text-base font-semibold text-white transition duration-300 ease-in-out transform bg-black rounded-lg hover:text-black hover:bg-yellow-300 lg:text-lg hover:shadow-lg"
                                 >
                                     Change Password
                                 </button>

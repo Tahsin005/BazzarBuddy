@@ -16,12 +16,12 @@ const Products = () => {
 
   return (
     <>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="px-4 py-10 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <section className="mb-10">
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">Filter Products</h2>
+          <h2 className="mb-6 text-3xl font-bold text-gray-800">Filter Products</h2>
           <div className="space-y-6">
             <div>
-              <label className="block text-gray-700 font-medium mb-2">Search:</label>
+              <label className="block mb-2 font-medium text-gray-700">Search:</label>
               <input
                 type="text"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
@@ -29,45 +29,45 @@ const Products = () => {
               />
             </div>
             <div>
-              <label className="block text-gray-700 font-medium mb-4">Categories:</label>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <label className="block mb-4 font-medium text-gray-700">Categories:</label>
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
                 <label className="flex items-center gap-2">
-                  <input type="checkbox" className="form-checkbox text-blue-600 w-5 h-5" />
-                  <span className="text-gray-800 text-lg">Electronics</span>
+                  <input type="checkbox" className="w-5 h-5 text-blue-600 form-checkbox" />
+                  <span className="text-lg text-gray-800">Electronics</span>
                 </label>
                 <label className="flex items-center gap-2">
-                  <input type="checkbox" className="form-checkbox text-blue-600 w-5 h-5" />
-                  <span className="text-gray-800 text-lg">Clothing</span>
+                  <input type="checkbox" className="w-5 h-5 text-blue-600 form-checkbox" />
+                  <span className="text-lg text-gray-800">Clothing</span>
                 </label>
                 <label className="flex items-center gap-2">
-                  <input type="checkbox" className="form-checkbox text-blue-600 w-5 h-5" />
-                  <span className="text-gray-800 text-lg">Books</span>
+                  <input type="checkbox" className="w-5 h-5 text-blue-600 form-checkbox" />
+                  <span className="text-lg text-gray-800">Books</span>
                 </label>
                 <label className="flex items-center gap-2">
-                  <input type="checkbox" className="form-checkbox text-blue-600 w-5 h-5" />
-                  <span className="text-gray-800 text-lg">Home Appliances</span>
+                  <input type="checkbox" className="w-5 h-5 text-blue-600 form-checkbox" />
+                  <span className="text-lg text-gray-800">Home Appliances</span>
                 </label>
                 <label className="flex items-center gap-2">
-                  <input type="checkbox" className="form-checkbox text-blue-600 w-5 h-5" />
-                  <span className="text-gray-800 text-lg">Sports</span>
+                  <input type="checkbox" className="w-5 h-5 text-blue-600 form-checkbox" />
+                  <span className="text-lg text-gray-800">Sports</span>
                 </label>
                 <label className="flex items-center gap-2">
-                  <input type="checkbox" className="form-checkbox text-blue-600 w-5 h-5" />
-                  <span className="text-gray-800 text-lg">Toys</span>
+                  <input type="checkbox" className="w-5 h-5 text-blue-600 form-checkbox" />
+                  <span className="text-lg text-gray-800">Toys</span>
                 </label>
                 <label className="flex items-center gap-2">
-                  <input type="checkbox" className="form-checkbox text-blue-600 w-5 h-5" />
-                  <span className="text-gray-800 text-lg">Groceries</span>
+                  <input type="checkbox" className="w-5 h-5 text-blue-600 form-checkbox" />
+                  <span className="text-lg text-gray-800">Groceries</span>
                 </label>
                 <label className="flex items-center gap-2">
-                  <input type="checkbox" className="form-checkbox text-blue-600 w-5 h-5" />
-                  <span className="text-gray-800 text-lg">Beauty</span>
+                  <input type="checkbox" className="w-5 h-5 text-blue-600 form-checkbox" />
+                  <span className="text-lg text-gray-800">Beauty</span>
                 </label>
               </div>
             </div>
 
             <div>
-              <label className="block text-gray-700 font-medium mb-2">
+              <label className="block mb-2 font-medium text-gray-700">
                 Max Price: ${maxPrice}
               </label>
               <input
@@ -84,33 +84,33 @@ const Products = () => {
         </section>
 
         <section>
-          <h2 className="text-3xl font-bold text-gray-800 mb-6">Products</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <h2 className="mb-6 text-3xl font-bold text-gray-800">Products</h2>
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {products.slice(0, allProducts).map((product) => (
               <div key={product.id} className="card bg-[#ADD8FF] shadow-xl h-full">
                 <figure>
                   <img
                     src={product.image}
                     alt="product image"
-                    className="w-full h-48 object-cover"
+                    className="object-cover w-full h-48"
                   />
                 </figure>
-                <div className="card-body p-6">
-                  <h2 className="card-title text-xl font-semibold">{product.name}</h2>
+                <div className="p-6 card-body">
+                  <h2 className="text-xl font-semibold card-title">{product.name}</h2>
                   <div>
                     <h2 className="text-sm text-gray-600">Category: {product.category}</h2>
                   </div>
-                  <h2 className="text-md font-semibold mt-2">
+                  <h2 className="mt-2 font-semibold text-md">
                     Price: <span>${product.price}</span>
                   </h2>
-                  <p className="text-sm text-gray-700 mt-2">
+                  <p className="mt-2 text-sm text-gray-700">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore,
                     temporibus.
                   </p>
-                  <div className="card-actions justify-center mt-4">
+                  <div className="justify-center mt-4 card-actions">
                     <Link
                       to="/product-details"
-                      className="text-white bg-black text-center hover:bg-yellow-300 hover:text-black py-2 px-6 rounded-xl text-lg font-semibold transition duration-300 ease-in-out transform hover:shadow-lg w-full"
+                      className="w-full px-6 py-2 text-lg font-semibold text-center text-white transition duration-300 ease-in-out transform bg-black hover:bg-yellow-300 hover:text-black rounded-xl hover:shadow-lg"
                     >
                       Details
                     </Link>

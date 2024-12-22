@@ -26,15 +26,15 @@ const Login = () => {
 
   return (
     <section className="py-10 sm:py-16 lg:py-24">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="bg-white rounded-lg shadow-lg p-8">
-          <h1 className="text-center text-2xl md:text-4xl font-bold text-gray-800 mb-6">Login</h1>
+      <div className="px-6 mx-auto max-w-7xl lg:px-8">
+        <div className="p-8 bg-white rounded-lg shadow-lg">
+          <h1 className="mb-6 text-2xl font-bold text-center text-gray-800 md:text-4xl">Login</h1>
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Username */}
             <div>
               <label
                 htmlFor="username"
-                className="text-gray-700 block mb-1 font-medium text-2xl"
+                className="block mb-1 text-2xl font-medium text-gray-700"
               >
                 Username
               </label>
@@ -44,7 +44,7 @@ const Login = () => {
                 id="username"
                 value={formData.username}
                 onChange={handleChange}
-                className="bg-gray-100 border border-gray-200 rounded py-2 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
+                className="block w-full px-3 py-2 text-gray-700 bg-gray-100 border border-gray-200 rounded focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Enter your username"
                 required
               />
@@ -54,7 +54,7 @@ const Login = () => {
             <div>
               <label
                 htmlFor="password"
-                className="text-gray-700 block mb-1 font-medium text-2xl"
+                className="block mb-1 text-2xl font-medium text-gray-700"
               >
                 Password
               </label>
@@ -64,28 +64,28 @@ const Login = () => {
                 id="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="bg-gray-100 border border-gray-200 rounded py-2 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
+                className="block w-full px-3 py-2 text-gray-700 bg-gray-100 border border-gray-200 rounded focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Enter your password"
                 required
               />
             </div>
 
             {/* Submit Button */}
-            <div className="space-x-4 mt-8">
+            <div className="mt-8 space-x-4">
               <button
                 type="submit"
-                className="bg-black text-white hover:text-black hover:bg-yellow-300 py-3 px-6 rounded-lg font-semibold text-lg transition duration-300 ease-in-out transform hover:shadow-lg w-full"
+                className="w-full px-6 py-3 text-lg font-semibold text-white transition duration-300 ease-in-out transform bg-black rounded-lg hover:text-black hover:bg-yellow-300 hover:shadow-lg"
               >
                 Login
               </button>
             </div>
 
             {/* Sign Up Link */}
-            <p className="text-center text-sm text-gray-600 mt-4">
+            <p className="mt-4 text-sm text-center text-gray-600">
               Don't have an account?{" "}
               <a
                 href="/register"
-                className="text-blue-600 hover:underline font-medium"
+                className="font-medium text-blue-600 hover:underline"
               >
                 Register here
               </a>
