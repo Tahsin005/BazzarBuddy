@@ -1,102 +1,145 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { BlinkBlur } from 'react-loading-indicators';
 
 const EditProfile = () => {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-    const handleEditProfile = (event) => {
-        event.preventDefault();
+  const user_id = localStorage.getItem('bazzar_buddy_user_id');
+  const user_account = localStorage.getItem('bazzar_buddy_user_account');
 
-        // Basic validation (e.g., check for empty fields)
-        if (!firstName || !lastName || !email) {
-            setErrorMessage("All fields are required.");
-            return;
-        }
-
-        // Simulated success message
-        setErrorMessage('');
-        alert('Profile updated successfully!');
+  useEffect(() => {
+    const loadInstance = () => {
+      setIsLoading(true);
+      try {
+        fetch(`http://127.0.0.1:8000/user/allUser/${user_id}/`)
+          .then((res) => res.json())
+          .then((user) => {
+            setFirstName(user.first_name);
+            setLastName(user.last_name);
+            setEmail(user.email);
+            try {
+              fetch(`http://127.0.0.1:8000/user/account/${user_account}/`)
+                .then((response) => response.json())
+                .then((account) => {
+                  console.log(account);
+                  setIsLoading(false);
+                });
+            } catch (error) {
+              console.log(error);
+              setIsLoading(false);
+            }
+          });
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+      }
     };
 
-    return (
-        <main className="pt-2 mx-auto mt-2">
-            <h1 className="mb-8 text-2xl font-bold text-center md:text-3xl">Edit Your Profile</h1>
+    if (user_account && user_id) {
+      loadInstance();
+    }
+  }, [user_id, user_account]);
 
-            {/* Error Container */}
-            {errorMessage && (
-                <div id="error-container" className="mb-4 text-red-500">
-                    {errorMessage}
-                </div>
-            )}
+  const handleEditProfile = async (event) => {
+    event.preventDefault();
 
-            <div className="grid grid-cols-1">
-                <div className="my-auto">
-                    <div className="rounded">
-                        <form method="POST" onSubmit={handleEditProfile}>
-                            <div className="grid gap-4 mt-8 lg:grid-cols-2">
-                                {/* First Name */}
-                                <div>
-                                    <label htmlFor="first_name" className="block mb-1 text-xl font-medium text-gray-700 lg:text-2xl">First Name</label>
-                                    <input
-                                        type="text"
-                                        name="first_name"
-                                        id="first_name"
-                                        className="block w-full px-3 py-1 text-gray-700 bg-gray-100 border border-gray-200 rounded focus:ring-blue-500 focus:border-blue-500"
-                                        placeholder="Enter your first name"
-                                        value={firstName}
-                                        onChange={(e) => setFirstName(e.target.value)}
-                                        required
-                                    />
-                                </div>
+    if (!firstName || !lastName || !email) {
+      toast.error('All fields are required.');
+      return;
+    }
 
-                                {/* Last Name */}
-                                <div>
-                                    <label htmlFor="last_name" className="block mb-1 text-xl font-medium text-gray-700 lg:text-2xl">Last Name</label>
-                                    <input
-                                        type="text"
-                                        name="last_name"
-                                        id="last_name"
-                                        className="block w-full px-3 py-1 text-gray-700 bg-gray-100 border border-gray-200 rounded focus:ring-blue-500 focus:border-blue-500"
-                                        placeholder="Enter your last name"
-                                        value={lastName}
-                                        onChange={(e) => setLastName(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                            </div>
+    setIsLoading(true);
 
-                            {/* Email Address */}
-                            <div>
-                                <label htmlFor="email" className="block mt-4 text-xl font-medium text-gray-700 lg:text-2xl">Email Address</label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    id="email"
-                                    className="block w-full px-3 py-1 text-gray-700 bg-gray-100 border border-gray-200 rounded focus:ring-blue-500 focus:border-blue-500"
-                                    placeholder="Enter your email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    required
-                                />
-                            </div>
+    const formData = new FormData();
+    formData.append('first_name', firstName);
+    formData.append('last_name', lastName);
+    formData.append('email', email);
 
-                            {/* Submit Button */}
-                            <div className="mt-8 space-x-4">
-                                <button
-                                    type="submit"
-                                    className="w-full px-6 py-3 text-base font-semibold text-white transition duration-300 ease-in-out transform bg-black rounded-lg hover:text-black hover:bg-yellow-300 lg:text-lg hover:shadow-lg"
-                                >
-                                    Edit Profile
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </main>
-    );
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/user/update/${user_id}/`, {
+        method: 'PATCH',
+        body: formData,
+      });
+      const data = await response.json();
+      toast.success('Account updated successfully');
+      setTimeout(() => {
+        navigate('/dashboard/profile/edit-profile');
+      }, 2000);
+    } catch (error) {
+      console.log('Error updating account:', error);
+      toast.error('Error updating account. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <main className="pt-2 mx-auto mt-2">
+      <h1 className="mb-8 text-2xl font-bold text-center md:text-3xl">Edit Your Profile</h1>
+      {isLoading ? (
+        <div className="flex items-center justify-center h-52">
+          <BlinkBlur color="#2563eb" size="medium" text="" textColor="" />
+        </div>
+      ) : (
+        <form onSubmit={handleEditProfile}>
+          <div className="mb-4">
+            <label htmlFor="first_name" className="block mb-2 text-sm font-bold text-gray-700">
+              First Name
+            </label>
+            <input
+              type="text"
+              id="first_name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="last_name" className="block mb-2 text-sm font-bold text-gray-700">
+              Last Name
+            </label>
+            <input
+              type="text"
+              id="last_name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="email" className="block mb-2 text-sm font-bold text-gray-700">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+            />
+          </div>
+
+          <div className="mb-4">
+            <button
+              type="submit"
+              className="w-full px-6 py-3 text-base font-semibold text-white transition duration-300 ease-in-out transform bg-black rounded-lg hover:text-black hover:bg-yellow-300 lg:text-lg hover:shadow-lg"
+            >
+              Update Profile
+            </button>
+          </div>
+        </form>
+      )}
+      <ToastContainer />
+    </main>
+  );
 };
 
 export default EditProfile;
