@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BlinkBlur } from 'react-loading-indicators';
+import { useNavigate } from 'react-router-dom';
 
 const EditProfile = () => {
   const [firstName, setFirstName] = useState('');
@@ -12,6 +13,7 @@ const EditProfile = () => {
 
   const user_id = localStorage.getItem('bazzar_buddy_user_id');
   const user_account = localStorage.getItem('bazzar_buddy_user_account');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const loadInstance = () => {

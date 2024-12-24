@@ -1,22 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+import { BlinkBlur } from 'react-loading-indicators';
 
 const Deposit = () => {
     const [amount, setAmount] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
-    const handleDeposit = (event) => {
+    useEffect(() => {
+        const token = localStorage.getItem('bazzar_buddy_token');
+        if (!token) {
+            navigate('/login');
+        }
+    }, [navigate]);
+
+    const handleDeposit = async (event) => {
         event.preventDefault();
 
-        // Basic validation (e.g., check for empty or invalid amount)
-        if (!amount || isNaN(amount) || amount <= 0) {
-            setErrorMessage("Please enter a valid amount.");
+        setIsLoading(true);
+        const amountValue = parseInt(amount);
+        const accountValue = parseInt(localStorage.getItem('bazzar_buddy_user_account'));
+
+        if (isNaN(amountValue) || isNaN(accountValue)) {
+            setErrorMessage('Invalid input. Please enter a valid amount.');
             return;
         }
 
-        // Simulated success message
-        setErrorMessage('');
-        alert(`You have successfully deposited $${amount}`);
-        setAmount(''); // Reset input field after success
+        try {
+            const response = await fetch('https://lifted-listed-backend.onrender.com/transaction/deposit/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ amount: amountValue, account: accountValue }),
+            });
+
+            if (response.ok) {
+                toast.success(`You have successfully deposited $${amountValue}`);
+                setAmount(''); // Reset input field after success
+                setIsLoading(false);
+                setTimeout(() => {
+                    navigate('/dashboard');
+                }, 2000);
+            } else {
+                const data = await response.json();
+                toast.error(data.message || 'Failed to deposit. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error during deposit:', error);
+            toast.error('Error during deposit. Please try again.');
+        }
     };
 
     return (
@@ -36,37 +72,31 @@ const Deposit = () => {
                         <form method="POST" onSubmit={handleDeposit}>
                             <div className="mt-4">
                                 {/* Amount Input */}
-                                <label
-                                    htmlFor="amount"
-                                    className="block mb-1 text-xl font-medium text-gray-700 lg:text-2xl"
-                                >
+                                <label htmlFor="amount" className="block mb-1 text-xl font-medium text-gray-700 lg:text-2xl">
                                     Amount
                                 </label>
                                 <input
                                     type="number"
                                     id="amount"
-                                    name="amount"
-                                    className="block w-full px-3 py-1 text-gray-700 bg-gray-100 border border-gray-200 rounded focus:ring-blue-500 focus:border-blue-500"
-                                    placeholder="Enter the deposit amount"
                                     value={amount}
                                     onChange={(e) => setAmount(e.target.value)}
-                                    required
+                                    className="block w-full px-3 py-1 text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
                                 />
                             </div>
 
-                            {/* Submit Button */}
-                            <div className="mt-8 space-x-4">
+                            <div className="mt-4">
                                 <button
                                     type="submit"
                                     className="w-full px-6 py-3 text-base font-semibold text-white transition duration-300 ease-in-out transform bg-black rounded-lg hover:text-black hover:bg-yellow-300 lg:text-lg hover:shadow-lg"
                                 >
-                                    Deposit
+                                    {isLoading ? (<BlinkBlur color="#2563eb" size="medium" text="" textColor="" />) : "Deposit"}
                                 </button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </main>
     );
 };

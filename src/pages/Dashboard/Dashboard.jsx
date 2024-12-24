@@ -27,7 +27,7 @@ const Dashboard = () => {
               .then((account) => {
                 setAccount(account);
                 setIsLoading(false);
-                console.log(user);
+                console.log(userData);
                 console.log(account);
               })
           } catch (error) {
