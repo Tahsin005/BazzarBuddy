@@ -89,7 +89,7 @@ const EditProfile = () => {
       ) : (
         <form onSubmit={handleEditProfile}>
           <div className="mb-4">
-            <label htmlFor="first_name" className="block mb-2 text-sm font-bold text-gray-700">
+            <label htmlFor="first_name" className="block mb-1 text-xl font-medium text-gray-700 lg:text-2xl">
               First Name
             </label>
             <input
@@ -102,7 +102,7 @@ const EditProfile = () => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="last_name" className="block mb-2 text-sm font-bold text-gray-700">
+            <label htmlFor="last_name" className="block mb-1 text-xl font-medium text-gray-700 lg:text-2xl">
               Last Name
             </label>
             <input
@@ -115,7 +115,7 @@ const EditProfile = () => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="email" className="block mb-2 text-sm font-bold text-gray-700">
+            <label htmlFor="email" className="block mb-1 text-xl font-medium text-gray-700 lg:text-2xl">
               Email
             </label>
             <input
