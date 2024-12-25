@@ -186,7 +186,8 @@ const Products = () => {
                     </p>
                     <div className="justify-center mt-4 card-actions">
                       <Link
-                        to="/product-details"
+                        to={`/product-details`}
+                        state={{ product }}
                         className="w-full px-6 py-2 text-lg font-semibold text-center text-white transition duration-300 ease-in-out transform bg-black hover:bg-yellow-300 hover:text-black rounded-xl hover:shadow-lg"
                       >
                         Details
