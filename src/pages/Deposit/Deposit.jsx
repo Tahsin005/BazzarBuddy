@@ -29,6 +29,11 @@ const Deposit = () => {
             return;
         }
 
+        if (amountValue < 100) {
+            toast.info('Minimum deposit amount is $100.');
+            return;
+        }
+
         try {
             const response = await fetch('https://lifted-listed-backend.onrender.com/transaction/deposit/', {
                 method: 'POST',
