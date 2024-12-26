@@ -20,7 +20,7 @@ const Login = () => {
 
     setIsLoading(true);
 
-    fetch("http://127.0.0.1:8000/user/login/", {
+    fetch("https://lifted-listed-backend.onrender.com/user/login/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,7 +34,7 @@ const Login = () => {
           localStorage.setItem("bazzar_buddy_user_id", data.user_id);
           const user_id = data.user_id;
 
-          fetch(`http://127.0.0.1:8000/user/account/?user_id=${user_id}`)
+          fetch(`https://lifted-listed-backend.onrender.com/user/account/?user_id=${user_id}`)
             .then((res) => res.json())
             .then((value) => {
               var ID = 0;

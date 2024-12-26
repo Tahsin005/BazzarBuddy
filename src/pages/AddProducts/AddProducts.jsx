@@ -1,4 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { BlinkBlur } from 'react-loading-indicators';
 
 const AddProducts = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +12,31 @@ const AddProducts = () => {
     price: '',
     categories: '',
   });
+  const [categories, setCategories] = useState([]);
+  const [isCategoriesLoading, setIsCategoriesLoading] = useState(true);
+  const [isProductAdding, setIsProductAdding] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("bazzar_buddy_token");
+    if (!token) {
+      navigate("/login");
+    }
+
+    const loadCategories = async () => {
+      try {
+        const response = await fetch("https://lifted-listed-backend.onrender.com/product/category/");
+        const data = await response.json();
+        setCategories(data);
+        setIsCategoriesLoading(false);
+      } catch (err) {
+        console.log(err);
+        setIsCategoriesLoading(false);
+      }
+    };
+
+    loadCategories();
+  }, [navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,10 +46,51 @@ const AddProducts = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Product Added:', formData);
-    // Add your form submission logic here (e.g., API call).
+    const token = localStorage.getItem("bazzar_buddy_token");
+    if (!token) {
+      navigate("/login");
+    }
+
+    const added_by = parseInt(localStorage.getItem('bazzar_buddy_user_id'));
+    const newProduct = {
+      name: formData.name,
+      description: formData.description,
+      image: formData.image,
+      price: parseInt(formData.price),
+      added_by: added_by,
+      bought_by: null,
+      categories: [parseInt(formData.categories)],
+    };
+
+    console.log(newProduct)
+
+    try {
+      setIsProductAdding(true);
+      const response = await fetch("https://lifted-listed-backend.onrender.com/product/list/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newProduct),
+      });
+      console.log(response);
+
+      if (response.ok) {
+        toast.success("Product has been listed successfully");
+        setIsProductAdding(false);
+        setTimeout(() => {
+          navigate("/products");
+        }, 3000);
+      } else {
+        const errorData = await response.json();
+        toast.error(`Failed to list the product: ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error("Error adding product:", error);
+      toast.error("Error adding product. Please try again.");
+    }
   };
 
   return (
@@ -43,8 +113,8 @@ const AddProducts = () => {
                 id="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="block w-full px-3 py-2 text-gray-700 bg-gray-100 border border-gray-200 rounded focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Enter product name"
+                className="w-full px-4 py-3 mt-2 text-gray-700 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
                 required
               />
             </div>
@@ -63,8 +133,8 @@ const AddProducts = () => {
                 id="image"
                 value={formData.image}
                 onChange={handleChange}
-                className="block w-full px-3 py-2 text-gray-700 bg-gray-100 border border-gray-200 rounded focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter product image URL"
+                placeholder="Enter image URL"
+                className="w-full px-4 py-3 mt-2 text-gray-700 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
                 required
               />
             </div>
@@ -82,11 +152,11 @@ const AddProducts = () => {
                 id="description"
                 value={formData.description}
                 onChange={handleChange}
-                className="block w-full px-3 py-2 text-gray-700 bg-gray-100 border border-gray-200 rounded focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Description"
+                placeholder="Enter product description"
+                className="w-full px-4 py-3 mt-2 text-gray-700 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
                 rows="4"
                 required
-              />
+              ></textarea>
             </div>
 
             {/* Price */}
@@ -103,8 +173,8 @@ const AddProducts = () => {
                 id="price"
                 value={formData.price}
                 onChange={handleChange}
-                className="block w-full px-3 py-2 text-gray-700 bg-gray-100 border border-gray-200 rounded focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Price"
+                placeholder="Enter product price"
+                className="w-full px-4 py-3 mt-2 text-gray-700 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
                 required
               />
             </div>
@@ -118,33 +188,40 @@ const AddProducts = () => {
                 Categories
               </label>
               <select
-                id="categories"
                 name="categories"
+                id="categories"
                 value={formData.categories}
                 onChange={handleChange}
+                className="w-full px-4 py-3 mt-2 text-gray-700 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
                 required
-                className="block w-full px-3 py-2 text-gray-700 bg-gray-100 border border-gray-200 rounded focus:ring-blue-500 focus:border-blue-500"
               >
-                <option value="" disabled>Select</option>
-                <option value="Electronics">Electronics</option>
-                <option value="Books">Books</option>
-                <option value="Clothing">Clothing</option>
-                {/* Add more category options here */}
+                <option value="" disabled>
+                  Select a category
+                </option>
+                {isCategoriesLoading ? (
+                  <option>Loading...</option>
+                ) : (
+                  categories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))
+                )}
               </select>
             </div>
 
-            {/* Submit Button */}
-            <div className="mt-8 space-x-4">
+            <div className="flex justify-center">
               <button
                 type="submit"
                 className="w-full px-6 py-3 text-lg font-semibold text-white transition duration-300 ease-in-out transform bg-black rounded-lg hover:text-black hover:bg-yellow-300 hover:shadow-lg"
               >
-                Add Product
+                {isProductAdding ? <BlinkBlur color="#2563eb" size="medium" text="" textColor="" /> : "Add Product"}
               </button>
             </div>
           </form>
         </div>
       </div>
+      <ToastContainer />
     </section>
   );
 };

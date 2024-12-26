@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BlinkBlur } from 'react-loading-indicators';
 import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from 'react-toastify';
 
 const EditProducts = () => {
   const location = useLocation();
@@ -10,59 +11,49 @@ const EditProducts = () => {
     image: '',
     description: '',
     price: '',
-    categories: [],
+    categories: '',
   });
   const navigate = useNavigate();
   const { product } = location.state || {};
   const [isCategoriesLoading, setIsCategoriesLoading] = useState(false);
   const [categories, setCategories] = useState([]);
-
-  console.log(product);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setFormData({
-      name: product.name,
-      image: product.image,
-      description: product.description,
-      price: product.price,
-      categories: product.categories.map(category => category.id),
-    });
-    console.log(product.categories.map(category => category.id));
+    if (product) {
+      setFormData({
+        name: product.name,
+        image: product.image,
+        description: product.description,
+        price: product.price,
+        categories: product.categories[0]?.id || '',
+      });
 
-    setIsCategoriesLoading(true);
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch('http://127.0.0.1:8000/product/category/');
-        if (!response.ok) {
-          throw new Error('Failed to fetch categories');
+      setIsCategoriesLoading(true);
+      const fetchCategories = async () => {
+        try {
+          const response = await fetch('https://lifted-listed-backend.onrender.com/product/category/');
+          if (!response.ok) {
+            throw new Error('Failed to fetch categories');
+          }
+          const data = await response.json();
+          setCategories(data);
+          setIsCategoriesLoading(false);
+        } catch (error) {
+          console.error('Error fetching categories:', error);
         }
-        const data = await response.json();
-        setCategories(data);
-        setIsCategoriesLoading(false);
-        console.log(categories);
-        console.log(data);
-      } catch (error) {
-        console.error('Error fetching categories:', error);
-      }
-    };
+      };
 
-    fetchCategories();
+      fetchCategories();
+    }
   }, [product]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "categories") {
-      const selectedCategories = Array.from(e.target.selectedOptions, option => parseInt(option.value));
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: selectedCategories,
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -75,11 +66,17 @@ const EditProducts = () => {
     const updateDproduct = {
       id: id,
       name: formData.name,
-      categories: formData.categories,
+      categories: [parseInt(formData.categories)],
       image: formData.image,
       description: formData.description,
-      price: formData.price,
+      price: parseInt(formData.price),
+      added_by: product.added_by,
+      bought_by: product.bought_by,
     };
+
+    console.log(updateDproduct)
+    // return;
+    setIsLoading(true);
 
     try {
       const response = await fetch(
@@ -91,8 +88,11 @@ const EditProducts = () => {
         }
       );
       if (response.status === 200) {
-        alert("Product details updated successfully");
-        navigate("/products");
+        toast.success("Product details updated successfully");
+        setIsLoading(false);
+        setTimeout(() => {
+          navigate("/products");
+        }, 3000);
       } else {
         console.log(
           "Product details update failed status code:",
@@ -113,8 +113,10 @@ const EditProducts = () => {
         method: "DELETE",
       });
       if (response.ok) {
-        alert("Product deleted successfully");
-        navigate("/my_listing");
+        toast.success("Product deleted successfully");
+        setTimeout(() => {
+          navigate("/products");
+        }, 3000);
       } else {
         console.error("Error deleting product:", response.statusText);
       }
@@ -230,7 +232,6 @@ const EditProducts = () => {
                   value={formData.categories}
                   onChange={handleChange}
                   className="w-full px-4 py-3 mt-2 text-gray-700 border border-gray-300 rounded-lg focus:ring focus:ring-blue-500 focus:outline-none"
-                  multiple
                   required
                 >
                   <option value="" disabled>
@@ -253,7 +254,7 @@ const EditProducts = () => {
                   type="submit"
                   className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-black rounded-lg hover:text-black hover:bg-yellow-300 focus:ring-2 focus:ring-offset-2"
                 >
-                  Save Changes
+                  {isLoading ? <BlinkBlur color="#2563eb" size="medium" text="" textColor="" /> : "Register"}
                 </button>
                 <button
                   type="button"
@@ -276,6 +277,7 @@ const EditProducts = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </section>
   );
 };

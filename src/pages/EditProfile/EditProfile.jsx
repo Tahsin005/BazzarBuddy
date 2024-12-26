@@ -19,14 +19,14 @@ const EditProfile = () => {
     const loadInstance = () => {
       setIsLoading(true);
       try {
-        fetch(`http://127.0.0.1:8000/user/allUser/${user_id}/`)
+        fetch(`https://lifted-listed-backend.onrender.com/user/allUser/${user_id}/`)
           .then((res) => res.json())
           .then((user) => {
             setFirstName(user.first_name);
             setLastName(user.last_name);
             setEmail(user.email);
             try {
-              fetch(`http://127.0.0.1:8000/user/account/${user_account}/`)
+              fetch(`https://lifted-listed-backend.onrender.com/user/account/${user_account}/`)
                 .then((response) => response.json())
                 .then((account) => {
                   console.log(account);
@@ -64,7 +64,7 @@ const EditProfile = () => {
     formData.append('email', email);
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/user/update/${user_id}/`, {
+      const response = await fetch(`https://lifted-listed-backend.onrender.com/user/update/${user_id}/`, {
         method: 'PATCH',
         body: formData,
       });

@@ -3,6 +3,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import { isAuthenticated } from '../../utils/authCheck';
+import { BlinkBlur } from 'react-loading-indicators';
 
 const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState('');
@@ -10,6 +11,7 @@ const ChangePassword = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChangePassword = async (event) => {
     event.preventDefault();
@@ -27,7 +29,8 @@ const ChangePassword = () => {
     }
 
     try {
-      const response = await fetch(`http://127.0.0.1:8000/user/password_change/`, {
+      setIsLoading(true);
+      const response = await fetch(`https://lifted-listed-backend.onrender.com/user/password_change/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_id, old_password: oldPassword, password: newPassword, password2: confirmPassword }),
@@ -35,14 +38,15 @@ const ChangePassword = () => {
       const data = await response.json();
       if (data.message) {
         toast.success('Password changed successfully');
+        setIsLoading(false);
         setTimeout(() => {
           navigate('/dashboard');
-        }, 2000);
+        }, 3000);
       } else {
           toast.error('Old password is not correct!');
           setTimeout(() => {
           navigate('/dashboard/profile/change-password');
-        }, 2000);
+        }, 3000);
       }
     } catch (error) {
       console.error('Error changing password:', error);
@@ -112,7 +116,7 @@ const ChangePassword = () => {
                   type="submit"
                   className="w-full px-6 py-3 text-base font-semibold text-white transition duration-300 ease-in-out transform bg-black rounded-lg hover:text-black hover:bg-yellow-300 lg:text-lg hover:shadow-lg"
                 >
-                  Change Password
+                  {isLoading ? <BlinkBlur color="#2563eb" size="medium" text="" textColor="" /> : "Submit"}
                 </button>
               </div>
             </form>

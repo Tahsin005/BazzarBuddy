@@ -22,12 +22,13 @@ import ProductDetails from './pages/ProductDetails/ProductDetails.jsx'
 import EditProducts from './pages/EditProducts/EditProducts.jsx'
 
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute.jsx'
+import ErrorPage from './pages/ErrorPage/ErrorPage.jsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    errorElement: <h1>Oops, something went wrong!</h1>,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       { path: '/', element: <Home></Home> },
       { path: '/about', element: <About></About> },
@@ -66,7 +67,6 @@ const router = createBrowserRouter([
           { path: 'profile/transactions', element: <Transactions></Transactions> },
           { path: 'my-purchased-products', element: <MyPurchasedProducts></MyPurchasedProducts> },
           { path: 'my-shortlisted-products', element: <MyShortlistedProducts></MyShortlistedProducts> },
-          { path: 'logout', element: <h2>Logout Page</h2> },
         ],
       },
     ],

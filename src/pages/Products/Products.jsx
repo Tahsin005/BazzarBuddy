@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { BlinkBlur } from 'react-loading-indicators';
 
 const Products = () => {
-  const [allProducts, setAllProducts] = useState(4);
+  const [allProducts, setAllProducts] = useState(20);
   const [maxPrice, setMaxPrice] = useState(99999);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -29,7 +29,7 @@ const Products = () => {
     setIsCategoriesLoading(true);
     const fetchCategories = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/product/category/');
+        const response = await fetch('https://lifted-listed-backend.onrender.com/product/category/');
         if (!response.ok) {
           throw new Error('Failed to fetch categories');
         }
@@ -49,7 +49,7 @@ const Products = () => {
     setIsProductsLoading(true);
     const fetchProducts = async () => {
       try {
-        let rootUrl = `http://127.0.0.1:8000/product/list/?max_price=${maxPrice}`;
+        let rootUrl = `https://lifted-listed-backend.onrender.com/product/list/?max_price=${maxPrice}`;
 
         if (selectedCategories.length > 0) {
           for (let i = 0; i < selectedCategories.length; i++) {
@@ -69,10 +69,10 @@ const Products = () => {
           throw new Error('Failed to fetch products');
         }
         const data = await response.json();
-        setProducts([]);
+        const unsoldProducts = data.filter(product => !product.bought_by);
+        setProducts(unsoldProducts);
 
         console.log(data);
-        setProducts(data);
         setIsProductsLoading(false);
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -92,6 +92,11 @@ const Products = () => {
 
   const handleSearch = () => {
     setTriggerSearch(!triggerSearch);
+  };
+
+  const getCategoryName = (categoryId) => {
+    const category = categories.find((cat) => cat.id === categoryId);
+    return category ? category.name : "Unknown";
   };
 
   return (
@@ -162,40 +167,46 @@ const Products = () => {
             {isProductsLoading ? (<div className="flex items-center justify-center h-52">
               <BlinkBlur color="#2563eb" size="large" text="" textColor="" />
             </div>) : (
-              products.slice(0, allProducts).map((product) => (
-                <div key={product.id} className="card bg-[#ADD8FF] shadow-xl h-full">
-                  <figure>
-                    <img
-                      src={product.image}
-                      alt="product image"
-                      className="object-cover w-full h-48"
-                    />
-                  </figure>
-                  <div className="p-6 card-body">
-                    <h2 className="text-xl font-semibold card-title">{product.name}</h2>
-                    <div>
-                    <h2 className="text-sm text-gray-600">
-                        Category: {product.categories.map((category) => category.name).join(', ')}
+              products.length > 0 ? (
+                products.slice(0, allProducts).map((product) => (
+                  <div key={product.id} className="card bg-[#ADD8FF] shadow-xl h-full">
+                    <figure>
+                      <img
+                        src={product.image}
+                        alt="product image"
+                        className="object-cover w-full h-48"
+                      />
+                    </figure>
+                    <div className="p-6 card-body">
+                      <h2 className="text-xl font-semibold card-title">{product.name}</h2>
+                      <div>
+                        <h2 className="text-sm text-gray-600">
+                          Category: {product.categories.map((categoryId) => getCategoryName(categoryId)).join(', ')}
+                        </h2>
+                      </div>
+                      <h2 className="mt-2 font-semibold text-md">
+                        Price: <span>${product.price}</span>
                       </h2>
-                    </div>
-                    <h2 className="mt-2 font-semibold text-md">
-                      Price: <span>${product.price}</span>
-                    </h2>
-                    <p className="mt-2 text-sm text-gray-700">
-                      {product.description}
-                    </p>
-                    <div className="justify-center mt-4 card-actions">
-                      <Link
-                        to={`/product-details`}
-                        state={{ product }}
-                        className="w-full px-6 py-2 text-lg font-semibold text-center text-white transition duration-300 ease-in-out transform bg-black hover:bg-yellow-300 hover:text-black rounded-xl hover:shadow-lg"
-                      >
-                        Details
-                      </Link>
+                      <p className="mt-2 text-sm text-gray-700">
+                        {product.description}
+                      </p>
+                      <div className="justify-center mt-4 card-actions">
+                        <Link
+                          to={`/product-details`}
+                          state={{ product }}
+                          className="w-full px-6 py-2 text-lg font-semibold text-center text-white transition duration-300 ease-in-out transform bg-black hover:bg-yellow-300 hover:text-black rounded-xl hover:shadow-lg"
+                        >
+                          Details
+                        </Link>
+                      </div>
                     </div>
                   </div>
+                ))
+              ) : (
+                <div className="flex items-center justify-center mt-10">
+                  <p className="text-4xl font-bold text-gray-700">No Products Found</p>
                 </div>
-              ))
+              )
             )}
           </div>
         </section>

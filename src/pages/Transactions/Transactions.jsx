@@ -15,7 +15,7 @@ const Transactions = () => {
 
     const fetchTransactions = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/transaction/transactions/${user_id}/`);
+        const response = await fetch(`https://lifted-listed-backend.onrender.com/transaction/transactions/${user_id}/`);
         if (!response.ok) {
           throw new Error('Failed to fetch transactions');
         }
@@ -60,28 +60,34 @@ const Transactions = () => {
           <BlinkBlur color="#2563eb" size="medium" text="" textColor="" />
         </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-200">
-            <thead>
-              <tr>
-                <th className="px-4 py-2 border-b">Amount</th>
-                <th className="px-4 py-2 border-b">Balance After Transaction</th>
-                <th className="px-4 py-2 border-b">Transaction Type</th>
-                <th className="px-4 py-2 border-b">Timestamp</th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.map((transaction, index) => (
-                <tr key={index} className={getRowClass(transaction.transaction_type)}>
-                  <td className="px-4 py-2 border-b">{transaction.amount}</td>
-                  <td className="px-4 py-2 border-b">{transaction.balance_after_transaction}</td>
-                  <td className="px-4 py-2 border-b">{transaction.transaction_type}</td>
-                  <td className="px-4 py-2 border-b">{new Date(transaction.timestamp).toLocaleString()}</td>
+        transactions.length > 0 ? (
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white border border-gray-200">
+              <thead>
+                <tr>
+                  <th className="px-4 py-2 border-b">Amount</th>
+                  <th className="px-4 py-2 border-b">Balance After Transaction</th>
+                  <th className="px-4 py-2 border-b">Transaction Type</th>
+                  <th className="px-4 py-2 border-b">Timestamp</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {transactions.map((transaction, index) => (
+                  <tr key={index} className={getRowClass(transaction.transaction_type)}>
+                    <td className="px-4 py-2 border-b">{transaction.amount}</td>
+                    <td className="px-4 py-2 border-b">{transaction.balance_after_transaction}</td>
+                    <td className="px-4 py-2 border-b">{transaction.transaction_type}</td>
+                    <td className="px-4 py-2 border-b">{new Date(transaction.timestamp).toLocaleString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <div className="flex items-center justify-center mt-10">
+            <p className="text-4xl font-bold text-gray-700">No Transactions to Show</p>
+          </div>
+        )
       )}
     </main>
   );

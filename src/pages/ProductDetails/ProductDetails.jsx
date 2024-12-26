@@ -12,17 +12,20 @@ const ProductDetails = () => {
   const [review, setReview] = useState([]);
   const [newReview, setNewReview] = useState("");
   const [isReviewLoading, setIsReviewLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   if (!product) {
     navigate('/products');
     return null;
   }
+  console.log(product)
+
 
   useEffect(() => {
     setIsReviewLoading(true);
     try {
       const user_account = localStorage.getItem('bazzar_buddy_user_account');
-      fetch(`http://127.0.0.1:8000/user/account/${user_account}`)
+      fetch(`https://lifted-listed-backend.onrender.com/user/account/${user_account}`)
         .then((res) => res.json())
         .then((data) => {
           if (data && data?.balance) {
@@ -45,7 +48,27 @@ const ProductDetails = () => {
     } catch (error) {
       console.error(error);
     }
+
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('https://lifted-listed-backend.onrender.com/product/category/');
+        if (!response.ok) {
+          throw new Error('Failed to fetch categories');
+        }
+        const data = await response.json();
+        setCategories(data);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    fetchCategories();
   }, [product.id]);
+
+  const getCategoryName = (categoryId) => {
+    const category = categories.find((cat) => cat.id === categoryId);
+    return category ? category.name : "Unknown";
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -70,6 +93,8 @@ const ProductDetails = () => {
       return;
     }
 
+    console.log(product.price, userBalance)
+
     if (product.price > userBalance) {
       toast.error("Insufficient balance to purchase the product.");
       setTimeout(() => {
@@ -78,7 +103,7 @@ const ProductDetails = () => {
       return;
     }
 
-    seller_id = product.added_by['id'];
+    seller_id = product.added_by;
 
     fetch(`https://lifted-listed-backend.onrender.com/product/buy/`, {
       method: "POST",
@@ -138,6 +163,11 @@ const ProductDetails = () => {
     }
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
   return (
     <div className="px-4 py-10 mx-auto max-w-7xl sm:px-6 lg:px-8">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
@@ -155,7 +185,9 @@ const ProductDetails = () => {
           <h1 className="mb-4 text-4xl font-bold text-gray-800">
             {product.name}
           </h1>
-          <h2 className="mb-2 text-lg text-gray-600">Category: {product.category}</h2>
+          <h2 className="mb-2 text-lg text-gray-600">
+            Category: {product.categories.map((categoryId) => getCategoryName(categoryId)).join(', ')}
+          </h2>
           <p className="mb-4 text-2xl font-semibold text-blue-600">${product.price}</p>
           <p className="mb-6 leading-relaxed text-gray-700">
             {product.description}
@@ -163,22 +195,22 @@ const ProductDetails = () => {
 
           {/* Add to Cart and Buy Now Buttons */}
           <div className="flex gap-4">
-            <Link
+            {product.added_by == localStorage.getItem('bazzar_buddy_user_id') && (<Link
               to='/edit-products'
               state={{ product }}
-              className="hidden lg:inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-xl"
+              className="lg:inline-flex items-center justify-center px-5 py-2.5 text-base transition-all duration-200 hover:bg-yellow-300 hover:text-black focus:text-black focus:bg-yellow-300 font-semibold text-white bg-black rounded-xl"
             >
               Edit Product
-            </Link>
-            <button onClick={handlePurchase} className="px-6 py-3 font-semibold text-black transition duration-300 ease-in-out transform bg-yellow-400 shadow-lg rounded-xl hover:bg-yellow-300">
-              Buy Now
-            </button>
+            </Link>)}
+            {userBalance && (<button onClick={handlePurchase} className="px-6 py-3 font-semibold text-black transition duration-300 ease-in-out transform bg-yellow-400 shadow-lg rounded-xl hover:bg-yellow-300">
+              {product.bought_by ? "Sold Out" : "Buy Now"}
+            </button>)}
           </div>
         </div>
       </div>
 
       {/* Reviews Section */}
-      {product?.bought_by && product?.bought_by['id'] == localStorage.getItem("bazzar_buddy_user_id") ? (<div className="mt-16">
+      {(product?.bought_by && product?.bought_by == localStorage.getItem("bazzar_buddy_user_id")) || (product?.added_by && product?.added_by == localStorage.getItem("bazzar_buddy_user_id")) ? (<div className="mt-16">
         <h2 className="mb-6 text-3xl font-bold text-gray-800">{review.length > 0 ? "Review" : ''}</h2>
 
         {isReviewLoading ? (<div className="flex items-center justify-start h-32">
@@ -187,11 +219,14 @@ const ProductDetails = () => {
           // Show the review if submitted
           <div className="p-4 border rounded-lg shadow-sm bg-gray-50">
             <p className="text-gray-700">
+              <div className="mb-4">
               <strong>User's Review:</strong>
+              </div>
               {review.map((rev, index) => (
                 <div key={index} className="p-4 border rounded-lg shadow-sm bg-gray-50">
                   <p className="text-gray-700">
-                    <strong>User's Review:</strong> {rev.body}
+                    <strong>{rev.body}</strong>
+                    <p>{formatDate(rev.created_on)}</p>
                   </p>
                 </div>
               ))}

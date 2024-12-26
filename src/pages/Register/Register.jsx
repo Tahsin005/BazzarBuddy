@@ -40,7 +40,7 @@ const Register = () => {
     setIsLoading(true);
 
     try {
-      fetch("http://127.0.0.1:8000/user/register/", {
+      fetch("https://lifted-listed-backend.onrender.com/user/register/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
