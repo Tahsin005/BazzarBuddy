@@ -173,7 +173,7 @@ const Products = () => {
                     <figure>
                       <img
                         src={product.image}
-                        alt="product image"
+                        alt={product.name}
                         className="object-cover w-full h-48"
                       />
                     </figure>
